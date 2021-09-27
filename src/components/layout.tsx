@@ -1,21 +1,11 @@
 import { NextPage } from 'next';
-import { Menu } from 'antd';
 import Head from 'next/head';
 import React from 'react';
-import { MenuItems } from '@src/app/enum/menu.enum';
-import { $enum } from "ts-enum-util";
-import Link from 'next/link';
 import { Layout } from 'antd';
-const { Header, Content } = Layout;
+import AppHeader from '@src/components/header';
+const { Content } = Layout;
 
 const AppLayout: NextPage = ({ children }) => {
-  const menu: Array<any> = $enum(MenuItems).map((item, key) => {
-    return (<Menu.Item key={key}>
-      <Link href={'/'+key}>
-        {item}
-      </Link>
-    </Menu.Item>)
-  });
   return (
     <>
       <Head>
@@ -24,16 +14,14 @@ const AppLayout: NextPage = ({ children }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header>
-        <Menu mode="horizontal" theme="dark">
-          {menu}
-        </Menu>
-      </Header>
-      <Content>
-        <main>
-          {children}
-        </main>
-      </Content>
+      <Layout className="layout">
+        <AppHeader />
+        <Content>
+          <main>
+            {children}
+          </main>
+        </Content>
+      </Layout>
     </>
   );
 }
