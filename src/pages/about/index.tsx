@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import AppLayout from '@components/layout'
-import { NextPageWithLayout } from '@app/pages/_app';
+import { NextPageWithLayout } from '@src/pages/_app';
 import { PageHeader } from 'antd';
 
 const About: NextPageWithLayout = () => {

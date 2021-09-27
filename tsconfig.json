@@ -15,12 +15,13 @@
     "jsx": "preserve",
     "baseUrl": "",
     "paths": {
-      "@app/*": ["src/*"],
+      "@src/*": ["src/*"],
+      "@app/*": ["src/app/*"],
       "@assets/*": ["assets/*"],
       "@api/*": ["src/api/*"],
       "@components/*": ["src/components/*"],
       "@pages/*":["src/pages/*"],
-      "@common/*": ["src/common/*"]
+      "@common/*": ["src/app/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "app"],

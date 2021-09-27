@@ -1,9 +1,11 @@
 import { ReactElement } from 'react';
 import AppLayout from '@components/layout'
-import { NextPageWithLayout } from '@app/pages/_app';
-import { PageHeader } from 'antd';
+import { NextPageWithLayout } from '@src/pages/_app';
 import CalendarPanel from '@pages/fullcal/calendar-panel'
-import DayPanel from '@app/pages/fullcal/day-panel';
+import DayPanel from '@src/pages/fullcal/day-panel';
+import { useAppDispatch, useAppSelector } from '@src/app/hooks';
+import { calendarSelector } from '@src/pages/fullcal/calendar.slice';
+
 const FullCalendar: NextPageWithLayout = () => {
   return (
     <>

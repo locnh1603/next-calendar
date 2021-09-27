@@ -2,11 +2,11 @@ import { NextPage } from 'next';
 import { Menu } from 'antd';
 import Head from 'next/head';
 import React from 'react';
-import { MenuItems } from '@app/common/enum/menu.enum';
+import { MenuItems } from '@src/app/enum/menu.enum';
 import { $enum } from "ts-enum-util";
 import Link from 'next/link';
 import { Layout } from 'antd';
-const { Header, Footer, Content } = Layout;
+const { Header, Content } = Layout;
 
 const AppLayout: NextPage = ({ children }) => {
   const menu: Array<any> = $enum(MenuItems).map((item, key) => {
@@ -34,7 +34,6 @@ const AppLayout: NextPage = ({ children }) => {
           {children}
         </main>
       </Content>
-      {/* <Footer>Footer</Footer> */}
     </>
   );
 }

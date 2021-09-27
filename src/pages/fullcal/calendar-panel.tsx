@@ -1,15 +1,25 @@
 import { NextPage } from 'next';
-import { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 import { Calendar, Card } from 'antd';
+import { useAppDispatch, useAppSelector } from '@src/app/hooks';
+import { calendarSelector, setCalendarMode, setDay } from '@src/pages/fullcal/calendar.slice';
 
 const CalendarPanel: NextPage = () => {
+  const dispatch = useAppDispatch();
+  const calendarState = useAppSelector(calendarSelector);
   const onSelect = (value: Moment) => {
-    console.log(value.format('DD/MM/yyyy'));
+    dispatch(setDay(value.valueOf()));
+  }
+
+  const onPanelChange = (value: Moment, mode: 'month' | 'year') => {
+    if (calendarState.calendarMode !== mode) {
+      dispatch(setCalendarMode(mode));
+    }
   }
   return (
     <>
       <Card className="left-panel">
-        <Calendar onSelect={onSelect} />
+        <Calendar onSelect={onSelect} onPanelChange={onPanelChange} value={moment(calendarState.selectedDay)}/>
       </Card>
     </>
   )
