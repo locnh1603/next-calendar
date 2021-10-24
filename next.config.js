@@ -11,7 +11,7 @@ module.exports = {
     return [
       {
         source: '/',
-        destination: '/fullcal',
+        destination: '/calendar',
         permanent: true,
       },
     ]

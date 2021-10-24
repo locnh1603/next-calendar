@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import calendarReducer from '@src/pages/fullcal/calendar.slice'
+import calendarReducer from '@src/pages/calendar/calendar.slice'
 
 export function makeStore() {
   return configureStore({

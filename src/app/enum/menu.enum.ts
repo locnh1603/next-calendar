@@ -1,4 +1,11 @@
 export enum MenuItems {
-  fullcal = 'Full Calendar',
-  about = 'About'
+  Calendar = 'calendar',
+  About = 'about'
+}
+
+export enum ItemStatuses {
+  ToDo = 'todo',
+  InProgress = 'inprogress',
+  Cancelled = 'cancelled',
+  Done = 'done'
 }

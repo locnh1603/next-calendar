@@ -1,46 +1,39 @@
 import { NextPage } from 'next';
-import { Layout, Menu } from 'antd';
+import { Button, Layout } from 'antd';
 import Link from 'next/link';
 import { MenuItems } from '@src/app/enum/menu.enum';
 import { $enum } from 'ts-enum-util';
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import moment from 'moment';
-import { Typography } from 'antd';
+import { signOut, useSession } from 'next-auth/react';
 
 const { Header } = Layout;
-const { Text } = Typography;
 
 const AppHeader: NextPage = () => {
-  let [clock, setClock] = useState(new Date());
-
-  useEffect(() => {
-    var clockTimer = setInterval(() => tick(), 60000);
-
-    return function cleanup() {
-      clearInterval(clockTimer);
-    };
-  });
-
-  const tick = () => {
-    setClock(new Date());
-  };
+  const { data: session } = useSession();
+  const router = useRouter();
+  const currentRoute = router.pathname;
 
   const menu: Array<any> = $enum(MenuItems).map((item, key) => {
-    return (<Menu.Item key={key} className="menu-item">
-      <Link href={'/' + key}>
-        {item}
+    return (<li key={key} className={currentRoute.includes(key) ? "nav-item nav-item-active" : "nav-item "}>
+      <Link href={'/' + MenuItems[key]}>
+        <a className="nav-link">{key}</a>
       </Link>
-    </Menu.Item>)
+    </li>)
   });
 
   return (
-    <Header className="row">
-      <div className="col-2">
-        <Text className="text-white">{moment(clock).format('HH:mm DD/MM/yyyy')}</Text>
+    <Header>
+      <div className="navbar">
+        <div className="container-fluid">
+          <ul className="navbar-nav">
+            {menu}
+            <li><span className="navbar-username"><small>{session?.user?.name}</small></span></li>
+            <li><Button type="link" onClick={() => signOut()} >Sign Out</Button></li>
+          </ul>
+        </div>
       </div>
-      <Menu mode="horizontal" theme="dark" className="col">
-        {menu}
-      </Menu>
     </Header>
   )
 }
