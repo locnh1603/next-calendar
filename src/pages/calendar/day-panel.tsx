@@ -1,7 +1,7 @@
 import { Card, Button, Modal } from 'antd';
 import { NextPage } from 'next';
 import moment from 'moment'
-import { addItem, calendarSelector, selectItem } from '@src/pages/calendar/calendar.slice';
+import { addItem, calendarSelector, deleteItem, editItem, selectItem } from '@src/pages/calendar/calendar.slice';
 import { useAppDispatch, useAppSelector } from '@src/app/hooks';
 import CalendarItemForm from '@src/pages/calendar/calendar-item-form';
 import { useState } from 'react';
@@ -42,7 +42,33 @@ const DayPanel: NextPage = () => {
     });
   };
   const editFormCallBack = (value: CalendarItem) => {
+    const data = {
+      ...calendarState.selectedCalendarItem,
+      ...value
+    };
+    setLoading(true);
+    dispatch(editItem(data)).then(() => {
+      setLoading(false);
+      setEditModal(false);
+    }).catch(e => {
+      console.log(e);
+      setLoading(false);
+    });
   };
+  const deleteFormCallBack = (id: string) => {
+    const targetId = calendarState.selectedCalendarItem?.id;
+    if (!targetId) {
+      return;
+    }
+    setLoading(true);
+    dispatch(deleteItem(targetId)).then(() => {
+      setLoading(false);
+      setEditModal(false);
+    }).catch(e => {
+      console.log(e);
+      setLoading(false);
+    });
+  }
   const editCalendarItem = (e: any) => {
     console.log(e.target);
     dispatch(selectItem(e.target.id)).then(() => showEditModal());
@@ -68,7 +94,7 @@ const DayPanel: NextPage = () => {
         onCancel={closeAddModal}
         footer={null}
       >
-        <CalendarItemForm callBack={addFormCallBack} loading={isLoading} edit={false}></CalendarItemForm>
+        <CalendarItemForm callBack={addFormCallBack} loading={isLoading} edit={false} deleteCallback={() => {}}></CalendarItemForm>
       </Modal>
       <Modal
         title={'Edit Calendar item'}
@@ -77,7 +103,7 @@ const DayPanel: NextPage = () => {
         onCancel={closeEditModal}
         footer={null}
       >
-        <CalendarItemForm callBack={editFormCallBack} loading={isLoading} edit={true}></CalendarItemForm>
+        <CalendarItemForm callBack={editFormCallBack} loading={isLoading} edit={true} deleteCallback={deleteFormCallBack}></CalendarItemForm>
       </Modal>
     </>
   );

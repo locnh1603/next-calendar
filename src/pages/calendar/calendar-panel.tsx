@@ -30,6 +30,14 @@ const CalendarPanel: NextPage = () => {
     });
     return calendarItems;
   };
+  const getDateItemFromMonthValue = (value: Moment) => {
+    const month = value.month();
+    const calendarItems = calendarState.calendarItems.filter(i => {
+      const targetDate = moment(i.date);
+      return targetDate.month() === month;
+    });
+    return calendarItems;
+  };
   const formCallBack = (value: any) => {
     const data = {
       ...calendarState.selectedCalendarItem,
@@ -85,10 +93,18 @@ const CalendarPanel: NextPage = () => {
     )
   };
 
+  const monthCellRender = (value: Moment) => {
+    const dateItems = getDateItemFromMonthValue(value);
+    const itemsCount = dateItems.length !== 0 ? <p className="small m-0">{dateItems.length} item(s)</p> : <></>;
+    return (
+      <div className="text-right">{itemsCount}</div>
+    );
+  }
+
   return (
     <>
       <Card className="left-panel" title="Calendar">
-        <Calendar dateCellRender={dateCellRender} onSelect={onSelect} value={moment(calendarState.selectedDay)} />
+        <Calendar dateCellRender={dateCellRender} onSelect={onSelect} value={moment(calendarState.selectedDay)} monthCellRender={monthCellRender}/>
       </Card>
       <Modal
         title={'Edit Calendar Item'}
@@ -97,7 +113,7 @@ const CalendarPanel: NextPage = () => {
         onCancel={closeModal}
         footer={null}
       >
-        <CalendarItemForm callBack={formCallBack} loading={isLoading} edit={true}></CalendarItemForm>
+        <CalendarItemForm callBack={formCallBack} loading={isLoading} edit={true} deleteCallback={() => {}}></CalendarItemForm>
       </Modal>
     </>
   );

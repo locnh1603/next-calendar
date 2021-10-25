@@ -7,7 +7,7 @@ import { useAppSelector } from '@src/app/hooks';
 import { calendarSelector } from '@src/pages/calendar/calendar.slice';
 import { DefaultColors } from '@src/app/enum/color.enum';
 
-const CalendarItemForm: NextPage<{ callBack: Function, loading: boolean, edit: boolean }, any> = ({ callBack, loading, edit }) => {
+const CalendarItemForm: NextPage<{ callBack: (values: any) => void, loading: boolean, edit: boolean, deleteCallback: (id: string) => void }, any> = ({ callBack, loading, edit, deleteCallback }) => {
   const [selectedColor, setColor] = useState(DefaultColors.White as string);
   const calendarState = useAppSelector(calendarSelector);
   const [form] = Form.useForm();
@@ -27,6 +27,13 @@ const CalendarItemForm: NextPage<{ callBack: Function, loading: boolean, edit: b
     setColor(color.hex);
     form.setFieldsValue(value);
   };
+  const handleDelete = () => {
+    const targetId = calendarState.selectedCalendarItem?.id;
+    if (!targetId) {
+      return;
+    }
+    deleteCallback(targetId);
+  }
   useEffect(() => {
     const value = calendarState.selectedCalendarItem;
     form.resetFields();
@@ -37,7 +44,7 @@ const CalendarItemForm: NextPage<{ callBack: Function, loading: boolean, edit: b
         date: moment(value.date),
         color: value.color
       });
-      handleColorChange({hex: value.color} as ColorResult);
+      handleColorChange({ hex: value.color } as ColorResult);
     };
   });
   return (
@@ -61,7 +68,12 @@ const CalendarItemForm: NextPage<{ callBack: Function, loading: boolean, edit: b
           onChangeComplete={handleColorChange}
         />
       </Form>
-      <Button className="submit-btn mt-4" onClick={handleSubmit} loading={loading}>Submit</Button>
+      <div className="row p-2">
+        <Button className="submit-btn mt-4 mr-2 col" onClick={handleSubmit} loading={loading}>Submit</Button>
+        {edit === true ?
+          <Button className="submit-btn mt-4 col" type="primary" danger onClick={handleDelete} loading={loading}>Delete</Button> : <></>
+        }
+      </div>
     </>
   );
 };

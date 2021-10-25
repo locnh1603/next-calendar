@@ -58,7 +58,7 @@ export const deleteItem = createAsyncThunk(
   'calendar/deleteItem',
   async (id: string) => {
     const response = await deleteCalendarItem(id);
-    return response.data as CalendarItem;
+    return response.data as any;
   }
 )
 
@@ -85,7 +85,7 @@ export const calendarSlice = createSlice({
       state.calendarItems[targetIdx] = action.payload;
     });
     builder.addCase(deleteItem.fulfilled, (state, action) => {
-      const targetIdx = state.calendarItems.findIndex(i => i.id === action.payload.id);
+      const targetIdx = state.calendarItems.findIndex(i => i.id === action.payload.arg);
       state.calendarItems.splice(targetIdx, 1);
     });
   },
