@@ -1,0 +1,36 @@
+{
+  "calendar-items": [
+    {
+      "title": "Test 2",
+      "content": "Doing somehint",
+      "date": 1633320053507,
+      "color": "#ffffff",
+      "createdDate": 1633320068112,
+      "id": "dd9a171d-c39d-4f91-b33e-b6c05d2c3b40",
+      "email": "nghloc1603@gmail.com"
+    },
+    {
+      "title": "Test today",
+      "content": "Work",
+      "date": "2021-10-11T15:10:45.079Z",
+      "color": "#c02929",
+      "id": "1f463960-bf6a-4c60-9b11-06a48809de46",
+      "email": "nghloc9701@gmail.com"
+    },
+    {
+      "title": "Test today 2",
+      "content": "Work",
+      "date": "2021-10-11T15:10:45.079Z",
+      "color": "#f392f3",
+      "id": "919c5a3d-eaed-429a-9076-7ace8dee59ed",
+      "email": "nghloc9701@gmail.com"
+    },
+    {
+      "title": "asdasdasd",
+      "content": "asdasdasdasd",
+      "date": "2021-10-19T09:49:55.212Z",
+      "color": "#a73e3e",
+      "id": "c1c5f3a9-1626-4c79-8840-4a7bcfc20aa1"
+    }
+  ]
+}

@@ -12,11 +12,16 @@ const About: NextPage = () => {
       <div>
         Made with
         <ul>
-          <li>NodeJS</li>
+          <li>Redux Toolkit</li>
+          <li>NEXT JS</li>
           <li>Ant Design</li>
           <li>Next Auth</li>
           <li>JSON server</li>
         </ul>
+      </div>
+      <div>
+        Simple calendar note app with OAuth and simple CRUD.
+        Utilizes Redux Toolkit for state management. Combine with React thunk and axios for data fetching
       </div>
     </>
   );
