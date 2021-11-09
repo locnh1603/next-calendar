@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import moment, { Moment } from 'moment';
 import { Calendar, Card, Popover, Modal } from 'antd';
 import { useAppDispatch, useAppSelector } from '@src/app/hooks';
-import { calendarSelector, editItem, selectItem, setDay } from '@src/pages/calendar/calendar.slice';
+import { calendarSelector, deleteItem, editItem, selectItem, setDay } from '@src/pages/calendar/calendar.slice';
 import { CalendarItem } from '@src/app/model/calendar-item.model';
 import CalendarItemForm from '@src/pages/calendar/calendar-item-form';
 import { useState } from 'react';
@@ -57,6 +57,20 @@ const CalendarPanel: NextPage = () => {
   }
   const showModal = () => {
     setModal(true);
+  }
+  const deleteCallback = () => {
+    const targetId = calendarState.selectedCalendarItem?.id;
+    if (!targetId) {
+      return;
+    }
+    setLoading(true);
+    dispatch(deleteItem(targetId)).then(() => {
+      setLoading(false);
+      setModal(false);
+    }).catch(e => {
+      console.log(e);
+      setLoading(false);
+    });
   }
   const dateCellRender = (value: Moment) => {
     const dateItems = sortItemsByDate(getDateItemFromDateValue(value));
@@ -113,7 +127,7 @@ const CalendarPanel: NextPage = () => {
         onCancel={closeModal}
         footer={null}
       >
-        <CalendarItemForm callBack={formCallBack} loading={isLoading} edit={true} deleteCallback={() => {}}></CalendarItemForm>
+        <CalendarItemForm callBack={formCallBack} loading={isLoading} edit={true} deleteCallback={deleteCallback}></CalendarItemForm>
       </Modal>
     </>
   );

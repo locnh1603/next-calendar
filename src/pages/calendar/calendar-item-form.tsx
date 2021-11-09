@@ -28,6 +28,7 @@ const CalendarItemForm: NextPage<{ callBack: (values: any) => void, loading: boo
     form.setFieldsValue(value);
   };
   const handleDelete = () => {
+    console.log(calendarState.selectedCalendarItem?.id);
     const targetId = calendarState.selectedCalendarItem?.id;
     if (!targetId) {
       return;
